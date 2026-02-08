@@ -12,8 +12,7 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "sync:start": "node scripts/sync.js",
-    "sync:historical": "node scripts/historical-sync.js",
-    "postinstall": "prisma generate"
+    "sync:historical": "node scripts/historical-sync.js"
   },
   "dependencies": {
     "@prisma/client": "^6.16.2",

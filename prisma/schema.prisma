@@ -1,0 +1,64 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Block {
+  number      BigInt   @id @unique
+  hash        String   @unique
+  parentHash  String
+  timestamp   DateTime
+  miner       String
+  gasLimit    BigInt
+  gasUsed     BigInt
+  baseFee     BigInt?
+  reward      String
+  txCount     Int
+  size        Int
+  transactions Transaction[]
+}
+
+model Transaction {
+  hash             String   @id @unique
+  blockNumber      BigInt
+  block            Block    @relation(fields: [blockNumber], references: [number])
+  blockHash        String
+  transactionIndex Int
+  from             String
+  to               String?
+  value            String
+  gasPrice         BigInt
+  gasLimit         BigInt
+  gasUsed          BigInt?
+  input            String
+  nonce            Int
+  status           Int?
+  timestamp        DateTime
+}
+
+model Token {
+  address     String   @id @unique
+  name        String
+  symbol      String
+  decimals    Int
+  totalSupply String
+  price       Float?
+  marketCap   Float?
+  volume24h   Float?
+  change24h   Float?
+  holders     Int?
+}
+
+model NetworkStats {
+  id              Int      @id @default(autoincrement())
+  blockNumber     BigInt
+  totalTx         BigInt
+  gasPrice        BigInt
+  networkHashrate String?
+  difficulty      String?
+  createdAt       DateTime @default(now())
+}
